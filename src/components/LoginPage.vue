@@ -19,7 +19,7 @@
             )
               input( :type="item.type" required )
               label {{ item.text }}
-              component( :is="dynamicComponents(item.icon)" )
+              .input-box-icon( v-html="iconsPack[item.icon]" )
             button.animation(
               type="submit"
               :style="getAnimationParameters(form.button.parameters)"
@@ -32,12 +32,13 @@
                 a( href="#" @click="handleLink" ) {{ form.link.text }}
 
         .info-text( :class="form.id" )
-          h2.animation( :style="getAnimationParameters(form.info.title.parameters)" ) {{ form.info.title.text }}
+          h2.animation.text-neon( :style="getAnimationParameters(form.info.title.parameters)" ) {{ form.info.title.text }}
           p.animation( :style="getAnimationParameters(form.info.description.parameters)" ) {{ form.info.description.text }}
 </template>
 
 <script setup>
-  import { ref, defineAsyncComponent, } from 'vue'
+  import { ref, } from 'vue'
+  import { iconsPack, } from '../assets/icons/index.js'
 
   const data = [
     {
@@ -50,7 +51,7 @@
         {
           type: 'text',
           text: 'Username',
-          icon: 'user-male',
+          icon: 'user_male',
           parameters: [ 1, 22, ],
         },
         {
@@ -90,7 +91,7 @@
         {
           type: 'text',
           text: 'Username',
-          icon: 'user-male',
+          icon: 'user_male',
           parameters: [ 18, 1, ],
         },
         {
@@ -133,7 +134,6 @@
   const isActive = ref(false)
 
   const getAnimationParameters = (value) => `--i: ${ value[0] }; --j: ${ value[1] };`
-  const dynamicComponents = (value) => defineAsyncComponent(() => import(`../assets/icons/${ value }.svg`))
 
   function handleLink() {
     isActive.value = !isActive.value
@@ -175,17 +175,13 @@
     }
 
     &-form {
-      --color-white: #ffffff;
-      --color-black: #000000;
-      --color-light-blue: #1177aa;
-
       position: relative;
       width: 750px;
       height: 450px;
-      background: var(--color-white);
-      border: 2px solid var(--color-black);
+      background-color: var(--color-main-white);
+      border: 2px solid var(--color-main-primary);
       border-radius: 10px;
-      box-shadow: 0 0 20px var(--color-black);
+      box-shadow: 0 0 20px var(--color-main-primary);
       overflow: hidden;
 
       &.active {
@@ -260,7 +256,7 @@
         h2 {
           position: relative;
           margin-bottom: 10px;
-          color: var(--color-black);
+          color: var(--color-main-primary);
           text-align: center;
           font-size: 32px;
 
@@ -271,7 +267,7 @@
             left: 50%;
             width: 40px;
             height: 4px;
-            background: var(--color-black);
+            background-color: var(--color-main-primary);
             transform: translateX(-50%);
           }
         }
@@ -308,19 +304,14 @@
         }
 
         h2 {
-          color: var(--color-white);
+          color: var(--color-main-white);
           font-size: 36px;
           line-height: 1.3;
           text-transform: uppercase;
-          text-shadow:
-            0 0 5px #00ffff80,
-            0 0 10px #00ffff80,
-            0 0 15px #00ffff80,
-            0 0 20px #00ffffcc;
         }
 
         p {
-          color: var(--color-white);
+          color: var(--color-main-white);
           font-size: 16px;
         }
       }
@@ -332,7 +323,7 @@
           right: 0;
           width: 850px;
           height: 600px;
-          background: #000;
+          background-color: var(--color-main-primary);
           transform: rotate(10deg) skewY(40deg);
           transform-origin: bottom right;
           transition: 1.5s ease;
@@ -345,7 +336,7 @@
           left: 250px;
           width: 850px;
           height: 700px;
-          background: var(--color-white);
+          background-color: var(--color-main-white);
           transform: rotate(0) skewY(0);
           transform-origin: bottom left;
           transition: 1.5s ease;
@@ -363,38 +354,38 @@
           width: 100%;
           height: 100%;
           padding-right: 23px;
-          background: transparent;
-          color: var(--color-black);
+          background-color: transparent;
+          color: var(--color-main-primary);
           border: none;
-          border-bottom: 2px solid var(--color-black);
+          border-bottom: 2px solid var(--color-main-primary);
           outline: none;
           font-size: 16px;
           font-weight: 500;
           transition: .5s;
 
           &:focus {
-            border-bottom-color: var(--color-light-blue);
+            border-bottom-color: var(--color-text-lightblue);
 
             &~label {
               top: -5px;
-              color: var(--color-light-blue);
+              color: var(--color-text-lightblue);
             }
 
-            ::v-deep &~svg path {
-              fill: var(--color-light-blue);
+            &~.input-box-icon ::v-deep svg path {
+              fill: var(--color-text-lightblue);
             }
           }
 
           &:valid {
-            border-bottom-color: var(--color-light-blue);
+            border-bottom-color: var(--color-text-lightblue);
 
             &~label {
               top: -5px;
-              color: var(--color-light-blue);
+              color: var(--color-text-lightblue);
             }
 
-            ::v-deep &~svg path {
-              fill: var(--color-light-blue);
+            &~.input-box-icon ::v-deep svg path {
+              fill: var(--color-text-lightblue);
             }
           }
         }
@@ -403,14 +394,14 @@
           position: absolute;
           top: 50%;
           left: 0;
-          color: var(--color-black);
+          color: var(--color-main-primary);
           font-size: 16px;
           transform: translateY(-50%);
           transition: .5s;
           pointer-events: none;
         }
 
-        svg {
+        &-icon {
           position: absolute;
           top: 50%;
           right: 0;
@@ -424,8 +415,8 @@
       button {
         width: 100%;
         height: 45px;
-        background-color: var(--color-black);
-        color: var(--color-white);
+        background-color: var(--color-main-primary);
+        color: var(--color-main-white);
         border: none;
         border-radius: 40px;
         outline: none;
@@ -435,18 +426,18 @@
         cursor: pointer;
 
         &:hover {
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+          box-shadow: 0 0 10px #000000cc;
         }
       }
 
       .link-txt {
         margin: 20px 0 10px;
-        color: var(--color-black);
+        color: var(--color-main-primary);
         font-size: 14px;
         text-align: center;
 
         a {
-          color: var(--color-light-blue);
+          color: var(--color-text-lightblue);
           font-weight: 600;
           text-decoration: none;
         }

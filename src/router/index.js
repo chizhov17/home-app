@@ -8,6 +8,7 @@ const router = createRouter({
     {
       path: '/',
       component: HomePage,
+      children: [],
     },
     {
       path: '/login',
