@@ -1,3 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
+  --color-main-background: #9c88ff;
+  --color-main-primary: #18283b;
+  --color-main-secondary: #2c3e50;
+  --color-main-white: #ffffff;
+  --color-text-primary: #8392a5;
+  --color-text-lightblue: #1177aa;
+
   margin: 0;
+  background-color: var(--color-main-background);
+
+  .text-neon {
+    text-shadow:
+      0 0 5px #00ffff80,
+      0 0 10px #00ffff80,
+      0 0 15px #00ffff80,
+      0 0 20px #00ffffcc;
+  }
 }
