@@ -42,7 +42,7 @@
     { icon: 'document', title: 'Document', url: '/', },
     { icon: 'synchronize', title: 'Synchronize', url: '/', },
     { icon: 'about', title: 'About', url: '/', },
-    { icon: 'share', title: 'Share', url: '/', },
+    { icon: 'info', title: 'Icons', url: '/icons', },
     { icon: 'settings', title: 'Settings', url: '/', },
   ]
 
